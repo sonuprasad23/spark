@@ -142,7 +142,7 @@ class SparkAppTheme {
       ),
       
       // Dialogs
-      dialogTheme: DialogTheme(
+      dialogTheme: DialogThemeData(
         backgroundColor: SparkColors.surface,
         elevation: 8,
         shape: RoundedRectangleBorder(

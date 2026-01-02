@@ -108,7 +108,6 @@ flutter:
     - assets/icons/
     - assets/animations/
     - assets/fonts/
-    - .env
   
   fonts:
     - family: Outfit

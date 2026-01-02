@@ -1,0 +1,74 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    function isImage() {
+      return request.resource.contentType.matches('image/.*');
+    }
+    
+    function isAudio() {
+      return request.resource.contentType.matches('audio/.*');
+    }
+    
+    function isUnder5MB() {
+      return request.resource.size < 5 * 1024 * 1024;
+    }
+    
+    function isUnder2MB() {
+      return request.resource.size < 2 * 1024 * 1024;
+    }
+
+    // User profile photos
+    match /users/{userId}/photos/{fileName} {
+      // Anyone authenticated can read profile photos
+      allow read: if isAuthenticated();
+      
+      // Only owner can upload their photos
+      allow write: if isOwner(userId) && isImage() && isUnder5MB();
+      
+      // Only owner can delete
+      allow delete: if isOwner(userId);
+    }
+
+    // Verification photos (ID verification)
+    match /users/{userId}/verification/{fileName} {
+      // Only owner and admins can read verification photos
+      allow read: if isOwner(userId);
+      
+      // Only owner can upload
+      allow write: if isOwner(userId) && isImage() && isUnder5MB();
+    }
+
+    // Chat media (images shared in chat)
+    match /rooms/{roomId}/media/{fileName} {
+      // Participants can read chat media
+      allow read: if isAuthenticated();
+      
+      // Authenticated users can upload (room participation validated in Functions)
+      allow write: if isAuthenticated() && isImage() && isUnder5MB();
+    }
+
+    // Voice notes
+    match /rooms/{roomId}/voice/{fileName} {
+      // Participants can read voice notes
+      allow read: if isAuthenticated();
+      
+      // Authenticated users can upload voice notes
+      allow write: if isAuthenticated() && isAudio() && isUnder2MB();
+    }
+
+    // Catch-all: deny everything else
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

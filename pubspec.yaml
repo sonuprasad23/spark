@@ -1,4 +1,4 @@
-name: spark_app
+name: Spark
 description: "SPARK - Dating that means more"
 publish_to: 'none'
 version: 1.0.0+1

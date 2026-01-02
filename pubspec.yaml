@@ -38,9 +38,9 @@ dependencies:
   image_picker: ^1.1.2
   image_cropper: ^8.0.2
   
-  # Audio
-  record: ^5.2.0
-  just_audio: ^0.9.43
+  # Audio (uncomment after testing with Flutter stable)
+  # record: ^5.2.0
+  # just_audio: ^0.9.43
   
   # Storage & Cache
   shared_preferences: ^2.3.4

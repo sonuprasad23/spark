@@ -139,17 +139,19 @@ class SparkButton extends StatelessWidget {
   }
 }
 
-/// Social sign-in button (for Google)
+/// Social sign-in button (for Google, etc.)
 class SparkSocialButton extends StatelessWidget {
   final String label;
-  final String iconPath;
+  final IconData? icon;
+  final String? iconPath;
   final VoidCallback? onPressed;
   final bool isLoading;
 
   const SparkSocialButton({
     super.key,
     required this.label,
-    required this.iconPath,
+    this.icon,
+    this.iconPath,
     this.onPressed,
     this.isLoading = false,
   });
@@ -177,8 +179,12 @@ class SparkSocialButton extends StatelessWidget {
             : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Using text emoji for now, replace with actual icon
-                  const Text('🔵', style: TextStyle(fontSize: 20)),
+                  if (icon != null)
+                    Icon(icon, size: 24, color: SparkColors.textPrimary),
+                  if (iconPath != null)
+                    Image.asset(iconPath!, width: 24, height: 24),
+                  if (icon == null && iconPath == null)
+                    const Text('🔵', style: TextStyle(fontSize: 20)),
                   const SizedBox(width: SparkSpacing.md),
                   Text(
                     label,
@@ -192,3 +198,4 @@ class SparkSocialButton extends StatelessWidget {
     );
   }
 }
+

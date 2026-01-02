@@ -48,8 +48,8 @@ class SparkAppTheme {
         ),
       ),
       
-      // Cards
-      cardTheme: CardTheme(
+      // Cards - Flutter 3.24+ uses CardThemeData
+      cardTheme: CardThemeData(
         color: SparkColors.cardBackground,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -141,7 +141,7 @@ class SparkAppTheme {
         elevation: 4,
       ),
       
-      // Dialogs
+      // Dialogs - Flutter 3.24+ uses DialogThemeData
       dialogTheme: DialogThemeData(
         backgroundColor: SparkColors.surface,
         elevation: 8,
@@ -177,7 +177,7 @@ class SparkAppTheme {
       // Chip
       chipTheme: ChipThemeData(
         backgroundColor: SparkColors.surfaceLight,
-        selectedColor: SparkColors.primary.withOpacity(0.2),
+        selectedColor: SparkColors.primary.withValues(alpha: 0.2),
         labelStyle: SparkTypography.labelMedium,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         shape: RoundedRectangleBorder(
@@ -208,7 +208,7 @@ class SparkAppTheme {
         }),
         trackColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
-            return SparkColors.primary.withOpacity(0.3);
+            return SparkColors.primary.withValues(alpha: 0.3);
           }
           return SparkColors.surfaceLight;
         }),
